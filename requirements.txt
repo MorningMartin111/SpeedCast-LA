@@ -1,0 +1,3 @@
+# Verified versions are recorded in docs/environment.md.
+numpy>=1.26,<3
+torch>=2.2,<3
