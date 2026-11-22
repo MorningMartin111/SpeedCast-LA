@@ -22,3 +22,5 @@ python -m unittest discover -s tests -p "test_data.py" -v
 - `DataLoader(batch_size=4)` 读取 test 的 `x=(4,12,3,3)`、`y_mph=(4,12,3)`、`y_mask=(4,12,3)`、`last_mph=(4,3)`、`origin_observed=(4,3)`、`origin_idx=(4,)`。
 
 这些是模拟数据的接口检查。正式数据性能与 B 的公共评测结果另行记录。
+
+GitHub 分支的全新克隆及独立虚拟环境也执行了上述三条命令：Python 3.13.7 / NumPy 2.5.5 / PyTorch 2.15.0+cpu，9 项测试全部通过，指纹一致。该检查确认公开分支包含完整数据接口，不依赖工作目录里尚未提交的正式数据或模型代码。
