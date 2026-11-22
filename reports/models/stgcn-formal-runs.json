@@ -1,0 +1,749 @@
+{
+  "report_date_local": "2026-11-22",
+  "report_timezone": "America/Toronto",
+  "protocol_version": "1.0",
+  "data_id": "sha256:61a74eeffbe6f6c22d44ed1dbf02f3032ccd14ea88c09c61aa753f427e494219",
+  "published_main_commit": "9900a3d06b5327b527b69082f255144201603b9d",
+  "full_budget_seed42_training_complete": true,
+  "unified_evaluation_complete": false,
+  "test_evaluated": false,
+  "seeds": [
+    42
+  ],
+  "public_main_training_inputs_identical": true,
+  "training_input_git_blobs": {
+    "configs/stgcn.json": "71593e42da8e525a34b89cef3ef5e04e2119e1ee",
+    "configs/stgcn_temporal.json": "9a1b32db644d4b10fffa11ade59e0fbb59105b46",
+    "pyproject.toml": "013819f798d1125934ba036a73cc6efbb78506f5",
+    "requirements-data.txt": "6dee0b7879e24d45582e8d8f3824d5df6b89c97d",
+    "requirements.txt": "b4bc267dc301247dfea8b14e7337e3cf101cc957",
+    "traffic/__init__.py": "5a84af3f096eef2359fd26bfccb671b35562e9fc",
+    "traffic/data/__init__.py": "686aba5c203afd7397b8d7fee4b71cea21be0475",
+    "traffic/data/bundle.py": "e493b20930e1c255223c32841c42df53d2b92aa1",
+    "traffic/data/check.py": "f50edeaa0f7e40451dcd1a9f43254b80c850f338",
+    "traffic/data/dataset.py": "8f341cea1824d5072ccf69beb858ff2e03488f27",
+    "traffic/data/download.py": "82337bd3e17171a725ab4f68a94d0d38b84ca6c2",
+    "traffic/data/fixture.py": "f00de7ae26543710f055b1319b746fc32f18792a",
+    "traffic/data/prepare.py": "6b7777614af262de6bacddd544327eaba67d7d5e",
+    "traffic/models/__init__.py": "16a7fd1a76bc7b4f06d76db392882e27cf07bd23",
+    "traffic/models/stgcn/__init__.py": "294af8688f982588ae613af4277e6e2362778e4e",
+    "traffic/models/stgcn/model.py": "35d60dc300ac74b1c270999d30f74b00e005f9d9",
+    "traffic/models/stgcn/predict.py": "b2328ce0ce385d4e87a2e52314e32f618992feac",
+    "traffic/models/stgcn/train.py": "c88ced66554429db1e8cb1febd1397eeb3e0e56b"
+  },
+  "note": "One seed, full uncapped train/validation splits; B unified validation cross-check/export and C groups pending. No test metrics.",
+  "timing_scope": "run.json training_seconds includes epoch train/validation, checkpoint save/reload and repeated best-weight validation; history elapsed_seconds is cumulative from training loop start",
+  "legacy_cpu_evidence_preserved": {
+    "stgcn-runs.json": {
+      "path": "reports/models/stgcn-runs.json",
+      "git_blob_id": "0696567b8b2729ac35d6e834941bffba2ee642fe",
+      "sha256_git_blob": "53c877413bba6befd324243d283d692a73cc58d209713d7ecf12be5a37253842",
+      "checksum_scope": "Git blob bytes, independent of checkout line-ending conversion"
+    },
+    "stgcn-history.csv": {
+      "path": "reports/models/stgcn-history.csv",
+      "git_blob_id": "7dc69285c66ecf4aaf77015244d4563fba1c5196",
+      "sha256_git_blob": "c1bee9bf97b75e5e3b42f7f3b5aabb67a35ac8012ae26b1adf857e8c0bcafdef",
+      "checksum_scope": "Git blob bytes, independent of checkout line-ending conversion"
+    }
+  },
+  "gpu_one_epoch_pilot": {
+    "model": "stgcn",
+    "seed": 42,
+    "protocol_version": "1.0",
+    "data_id": "sha256:61a74eeffbe6f6c22d44ed1dbf02f3032ccd14ea88c09c61aa753f427e494219",
+    "units": "mph",
+    "code_commit": "9fae1063de461298e9ff8e78409fe4d9780d78c8",
+    "code_dirty": false,
+    "configuration": {
+      "model": "stgcn",
+      "hidden_channels": 32,
+      "blocks": 2,
+      "temporal_kernel": 3,
+      "cheb_order": 3,
+      "dropout": 0.1,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0,
+      "batch_size": 32,
+      "max_epochs": 1,
+      "patience": 10,
+      "num_workers": 0,
+      "num_threads": 2,
+      "max_train_batches": null,
+      "max_val_batches": null,
+      "seed": 42,
+      "device": "cuda"
+    },
+    "implementation_source": {
+      "paper": "https://www.ijcai.org/proceedings/2018/0505.pdf",
+      "reference_repository": "https://github.com/VeritasYin/STGCN_IJCAI-18",
+      "implementation": "Original project PyTorch reimplementation; no copied code or pretrained weights",
+      "reference_revision": "4ab75ab69af354d6a0ab86aefa082d389b187127",
+      "project_changes": [
+        "Direct per-node 12-step prediction head",
+        "Per-node feature-channel LayerNorm",
+        "max(A,A.T) symmetrization and fixed lambda_max=2 normalized Laplacian",
+        "Temporal ablation replaces only graph convolution with a channel projection"
+      ]
+    },
+    "environment": {
+      "python": "3.13.7",
+      "numpy": "2.5.3",
+      "torch": "2.11.0+cu128",
+      "torch_cuda": "12.8",
+      "cuda_available": true,
+      "device": "cuda",
+      "platform": "Windows-11-10.0.22631-SP0",
+      "cublas_workspace_config": ":4096:8"
+    },
+    "train_windows": 23967,
+    "val_windows": 3416,
+    "parameter_count": 27276,
+    "temporal_lengths": [
+      12,
+      10,
+      8,
+      6,
+      4
+    ],
+    "input_channels": [
+      "standardized_filled_speed",
+      "tod_slot/288",
+      "integer_dow_as_float"
+    ],
+    "prediction_axes": [
+      "sample",
+      "horizon_step_1_to_12",
+      "bundle_sensor_order"
+    ],
+    "graph_processing": "max(A,A.T); diagonal removed; symmetric normalized Laplacian; lambda_max=2; T0..T(K-1)",
+    "cross_node_mixing": "only graph convolution",
+    "selection_metric": "val all12 MAE in mph; valid-scalar weighted",
+    "metric_backend": "local protocol-equivalent MAE; B cross-check pending",
+    "budget_note": "CLI max-epochs override",
+    "smoke_only": false,
+    "hyperparameter_trials": 1,
+    "checkpoint": "best.pt",
+    "status": "complete",
+    "source_sha256": {
+      "__init__.py": "d9d704cde2b824eefa04cfbd1a2709e90be2523ef5cda3eb221708fb4d0612e5",
+      "model.py": "247e92cd9c0e986c9b35e9e9eb89747ddf040355d89871219316a9c29907136b",
+      "predict.py": "79568dc05c077bce1d61e01ed958c6152b13aee469e1814154b46ddb3fc9072f",
+      "train.py": "948d5425ea24f1e78106e89073aeacbbb3567b854eab06a6f5fa0ee91d21b5a0"
+    },
+    "best_epoch": 1,
+    "val_mae_mph": 3.3784245613098376,
+    "epochs_completed": 1,
+    "training_seconds": 10.62827660003677,
+    "skipped_all_missing_batches": 0,
+    "checkpoint_sha256": "da950f00a20e0e0db8bcf53267afa90b2dd89311f06b21dc6d8c13dbfab530d8",
+    "history_sha256": "62a6cedebffc751fde9117f389b85fabb822c4328276634af2ecb39767703358",
+    "purpose": "one_epoch_gpu_pilot",
+    "run_dir": "runs/pilot/stgcn/seed42-e1-r01",
+    "artifact_availability": "Local computer only; no public checkpoint download has been published",
+    "test_evaluated": false,
+    "official_prediction_exported": false,
+    "artifacts": {
+      "best.pt": {
+        "path": "runs/pilot/stgcn/seed42-e1-r01/best.pt",
+        "bytes": 632915,
+        "sha256": "da950f00a20e0e0db8bcf53267afa90b2dd89311f06b21dc6d8c13dbfab530d8"
+      },
+      "run.json": {
+        "path": "runs/pilot/stgcn/seed42-e1-r01/run.json",
+        "bytes": 3163,
+        "sha256": "f149a82a49993f37836fceb9c86a80901b02edf1a1c64a657a2de83bc4090bea"
+      },
+      "config.json": {
+        "path": "runs/pilot/stgcn/seed42-e1-r01/config.json",
+        "bytes": 379,
+        "sha256": "e6c59b4a34ad33bc069388c25a614cd24fe663979f736f4c7efb4f3362427f33"
+      },
+      "history.csv": {
+        "path": "runs/pilot/stgcn/seed42-e1-r01/history.csv",
+        "bytes": 168,
+        "sha256": "62a6cedebffc751fde9117f389b85fabb822c4328276634af2ecb39767703358"
+      },
+      "stdout.log": {
+        "path": "runs/pilot/stgcn/seed42-e1-r01/stdout.log",
+        "bytes": 851,
+        "sha256": "2829339275218f947420851867252e84bf31ea3fb55f3fc8dbaa8af2c5f0c7ed"
+      },
+      "stderr.log": {
+        "path": "runs/pilot/stgcn/seed42-e1-r01/stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "environment-freeze.txt": {
+        "path": "runs/pilot/stgcn/seed42-e1-r01/environment-freeze.txt",
+        "bytes": 199,
+        "sha256": "e26aa0c233f135d40a738b1401b76ac0a7b0b500117ca1bef41433034f159eac"
+      }
+    },
+    "history": [
+      {
+        "epoch": "1",
+        "train_n": "55289280",
+        "train_mae_mph": "4.016274350668614",
+        "val_n": "7892981",
+        "val_mae_mph": "3.3784245613098376",
+        "skipped_all_missing_batches": "0",
+        "elapsed_seconds": "10.07226859999355"
+      }
+    ],
+    "synchronized_epoch_train_plus_validation_seconds": 10.07226859999355,
+    "peak_allocator_allocated_bytes": 213415424,
+    "peak_allocator_reserved_bytes": 245366784
+  },
+  "runs": [
+    {
+      "model": "stgcn",
+      "seed": 42,
+      "protocol_version": "1.0",
+      "data_id": "sha256:61a74eeffbe6f6c22d44ed1dbf02f3032ccd14ea88c09c61aa753f427e494219",
+      "units": "mph",
+      "code_commit": "9fae1063de461298e9ff8e78409fe4d9780d78c8",
+      "code_dirty": false,
+      "configuration": {
+        "model": "stgcn",
+        "hidden_channels": 32,
+        "blocks": 2,
+        "temporal_kernel": 3,
+        "cheb_order": 3,
+        "dropout": 0.1,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "batch_size": 32,
+        "max_epochs": 60,
+        "patience": 10,
+        "num_workers": 0,
+        "num_threads": 2,
+        "max_train_batches": null,
+        "max_val_batches": null,
+        "seed": 42,
+        "device": "cuda"
+      },
+      "implementation_source": {
+        "paper": "https://www.ijcai.org/proceedings/2018/0505.pdf",
+        "reference_repository": "https://github.com/VeritasYin/STGCN_IJCAI-18",
+        "implementation": "Original project PyTorch reimplementation; no copied code or pretrained weights",
+        "reference_revision": "4ab75ab69af354d6a0ab86aefa082d389b187127",
+        "project_changes": [
+          "Direct per-node 12-step prediction head",
+          "Per-node feature-channel LayerNorm",
+          "max(A,A.T) symmetrization and fixed lambda_max=2 normalized Laplacian",
+          "Temporal ablation replaces only graph convolution with a channel projection"
+        ]
+      },
+      "environment": {
+        "python": "3.13.7",
+        "numpy": "2.5.3",
+        "torch": "2.11.0+cu128",
+        "torch_cuda": "12.8",
+        "cuda_available": true,
+        "device": "cuda",
+        "platform": "Windows-11-10.0.22631-SP0",
+        "cublas_workspace_config": ":4096:8"
+      },
+      "train_windows": 23967,
+      "val_windows": 3416,
+      "parameter_count": 27276,
+      "temporal_lengths": [
+        12,
+        10,
+        8,
+        6,
+        4
+      ],
+      "input_channels": [
+        "standardized_filled_speed",
+        "tod_slot/288",
+        "integer_dow_as_float"
+      ],
+      "prediction_axes": [
+        "sample",
+        "horizon_step_1_to_12",
+        "bundle_sensor_order"
+      ],
+      "graph_processing": "max(A,A.T); diagonal removed; symmetric normalized Laplacian; lambda_max=2; T0..T(K-1)",
+      "cross_node_mixing": "only graph convolution",
+      "selection_metric": "val all12 MAE in mph; valid-scalar weighted",
+      "metric_backend": "local protocol-equivalent MAE; B cross-check pending",
+      "budget_note": "default config budget",
+      "smoke_only": false,
+      "hyperparameter_trials": 1,
+      "checkpoint": "best.pt",
+      "status": "complete",
+      "source_sha256": {
+        "__init__.py": "d9d704cde2b824eefa04cfbd1a2709e90be2523ef5cda3eb221708fb4d0612e5",
+        "model.py": "247e92cd9c0e986c9b35e9e9eb89747ddf040355d89871219316a9c29907136b",
+        "predict.py": "79568dc05c077bce1d61e01ed958c6152b13aee469e1814154b46ddb3fc9072f",
+        "train.py": "948d5425ea24f1e78106e89073aeacbbb3567b854eab06a6f5fa0ee91d21b5a0"
+      },
+      "best_epoch": 58,
+      "val_mae_mph": 3.012113947289986,
+      "epochs_completed": 60,
+      "training_seconds": 591.5306248000124,
+      "skipped_all_missing_batches": 0,
+      "checkpoint_sha256": "a606ce7a1e85fecbe6660559e1073fa50ddf2a7ee4ab6e67ec56f46dbad009b9",
+      "history_sha256": "98693e1e61254cde50ca4207e6c4ad419044b309da36db5dfe749c31f5cdad9b",
+      "purpose": "formal_seed42_training",
+      "run_dir": "runs/stgcn/seed42",
+      "artifact_availability": "Local computer only; no public checkpoint download has been published",
+      "test_evaluated": false,
+      "official_prediction_exported": false,
+      "artifacts": {
+        "best.pt": {
+          "path": "runs/stgcn/seed42/best.pt",
+          "bytes": 632915,
+          "sha256": "a606ce7a1e85fecbe6660559e1073fa50ddf2a7ee4ab6e67ec56f46dbad009b9"
+        },
+        "run.json": {
+          "path": "runs/stgcn/seed42/run.json",
+          "bytes": 3163,
+          "sha256": "a0926b64f0b1285a3e095bf7ea9a63ef733e76ba6dfac831bc9475f9d4157db1"
+        },
+        "config.json": {
+          "path": "runs/stgcn/seed42/config.json",
+          "bytes": 380,
+          "sha256": "5a389d621d2887f96b4b471bf49db0517c46a56cc57eaaf24a5949b89474d13c"
+        },
+        "history.csv": {
+          "path": "runs/stgcn/seed42/history.csv",
+          "bytes": 4788,
+          "sha256": "98693e1e61254cde50ca4207e6c4ad419044b309da36db5dfe749c31f5cdad9b"
+        },
+        "stdout.log": {
+          "path": "runs/stgcn/seed42/stdout.log",
+          "bytes": 11985,
+          "sha256": "f425cd710f3b2611302c1e9330863ca37304e9b9a01397816e765b0d40f19752"
+        },
+        "stderr.log": {
+          "path": "runs/stgcn/seed42/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "validation-check.stdout.log": {
+          "path": "runs/stgcn/seed42/validation-check.stdout.log",
+          "bytes": 395,
+          "sha256": "c11456221bfb8a543b9457f58f23aaea6494d40335e025901d651e5120cfb923"
+        },
+        "validation-check.stderr.log": {
+          "path": "runs/stgcn/seed42/validation-check.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "prediction_check": {
+        "data_id": "sha256:61a74eeffbe6f6c22d44ed1dbf02f3032ccd14ea88c09c61aa753f427e494219",
+        "model": "stgcn",
+        "split": "val",
+        "shape": [
+          3416,
+          12,
+          207
+        ],
+        "units": "mph",
+        "finite": true,
+        "origin_order_verified": true,
+        "sensor_order_verified": true,
+        "first_origin": 23989,
+        "last_origin": 27404,
+        "checkpoint_sha256": "a606ce7a1e85fecbe6660559e1073fa50ddf2a7ee4ab6e67ec56f46dbad009b9",
+        "exported": false
+      },
+      "independent_reloaded_val_all12_mae_mph": 3.012113947289986
+    },
+    {
+      "model": "stgcn_temporal",
+      "seed": 42,
+      "protocol_version": "1.0",
+      "data_id": "sha256:61a74eeffbe6f6c22d44ed1dbf02f3032ccd14ea88c09c61aa753f427e494219",
+      "units": "mph",
+      "code_commit": "9fae1063de461298e9ff8e78409fe4d9780d78c8",
+      "code_dirty": false,
+      "configuration": {
+        "model": "stgcn_temporal",
+        "hidden_channels": 32,
+        "blocks": 2,
+        "temporal_kernel": 3,
+        "cheb_order": 3,
+        "dropout": 0.1,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "batch_size": 32,
+        "max_epochs": 60,
+        "patience": 10,
+        "num_workers": 0,
+        "num_threads": 2,
+        "max_train_batches": null,
+        "max_val_batches": null,
+        "seed": 42,
+        "device": "cuda"
+      },
+      "implementation_source": {
+        "paper": "https://www.ijcai.org/proceedings/2018/0505.pdf",
+        "reference_repository": "https://github.com/VeritasYin/STGCN_IJCAI-18",
+        "implementation": "Original project PyTorch reimplementation; no copied code or pretrained weights",
+        "reference_revision": "4ab75ab69af354d6a0ab86aefa082d389b187127",
+        "project_changes": [
+          "Direct per-node 12-step prediction head",
+          "Per-node feature-channel LayerNorm",
+          "max(A,A.T) symmetrization and fixed lambda_max=2 normalized Laplacian",
+          "Temporal ablation replaces only graph convolution with a channel projection"
+        ]
+      },
+      "environment": {
+        "python": "3.13.7",
+        "numpy": "2.5.3",
+        "torch": "2.11.0+cu128",
+        "torch_cuda": "12.8",
+        "cuda_available": true,
+        "device": "cuda",
+        "platform": "Windows-11-10.0.22631-SP0",
+        "cublas_workspace_config": ":4096:8"
+      },
+      "train_windows": 23967,
+      "val_windows": 3416,
+      "parameter_count": 23180,
+      "temporal_lengths": [
+        12,
+        10,
+        8,
+        6,
+        4
+      ],
+      "input_channels": [
+        "standardized_filled_speed",
+        "tod_slot/288",
+        "integer_dow_as_float"
+      ],
+      "prediction_axes": [
+        "sample",
+        "horizon_step_1_to_12",
+        "bundle_sensor_order"
+      ],
+      "graph_processing": "max(A,A.T); diagonal removed; symmetric normalized Laplacian; lambda_max=2; T0..T(K-1)",
+      "cross_node_mixing": "none",
+      "selection_metric": "val all12 MAE in mph; valid-scalar weighted",
+      "metric_backend": "local protocol-equivalent MAE; B cross-check pending",
+      "budget_note": "default config budget",
+      "smoke_only": false,
+      "hyperparameter_trials": 1,
+      "checkpoint": "best.pt",
+      "status": "complete",
+      "source_sha256": {
+        "__init__.py": "d9d704cde2b824eefa04cfbd1a2709e90be2523ef5cda3eb221708fb4d0612e5",
+        "model.py": "247e92cd9c0e986c9b35e9e9eb89747ddf040355d89871219316a9c29907136b",
+        "predict.py": "79568dc05c077bce1d61e01ed958c6152b13aee469e1814154b46ddb3fc9072f",
+        "train.py": "948d5425ea24f1e78106e89073aeacbbb3567b854eab06a6f5fa0ee91d21b5a0"
+      },
+      "best_epoch": 36,
+      "val_mae_mph": 3.2402696340359514,
+      "epochs_completed": 46,
+      "training_seconds": 333.08145290007815,
+      "skipped_all_missing_batches": 0,
+      "checkpoint_sha256": "cf08ddd141de6954567f9d30b7198454a47ce2a1e316b614282fac03fd456523",
+      "history_sha256": "c812486d22d002cd2a0888e9f6146057437ea295f559d872446bafb4e593e1c9",
+      "purpose": "formal_seed42_training",
+      "run_dir": "runs/stgcn_temporal/seed42",
+      "artifact_availability": "Local computer only; no public checkpoint download has been published",
+      "test_evaluated": false,
+      "official_prediction_exported": false,
+      "artifacts": {
+        "best.pt": {
+          "path": "runs/stgcn_temporal/seed42/best.pt",
+          "bytes": 616531,
+          "sha256": "cf08ddd141de6954567f9d30b7198454a47ce2a1e316b614282fac03fd456523"
+        },
+        "run.json": {
+          "path": "runs/stgcn_temporal/seed42/run.json",
+          "bytes": 3165,
+          "sha256": "722c0ce2049d59bfe957eabdc508465158bc670f180dc1bd81c33d18aca20f24"
+        },
+        "config.json": {
+          "path": "runs/stgcn_temporal/seed42/config.json",
+          "bytes": 389,
+          "sha256": "37a21ebf5c92f1e835f44c56a6100dc9f7eb23ddc0957d339beae65be6f5886e"
+        },
+        "history.csv": {
+          "path": "runs/stgcn_temporal/seed42/history.csv",
+          "bytes": 3680,
+          "sha256": "c812486d22d002cd2a0888e9f6146057437ea295f559d872446bafb4e593e1c9"
+        },
+        "stdout.log": {
+          "path": "runs/stgcn_temporal/seed42/stdout.log",
+          "bytes": 9222,
+          "sha256": "7790d6b0ecd135d8e07b8866e7345981e3c5628f0fbba9bbaa67bf7205cabbef"
+        },
+        "stderr.log": {
+          "path": "runs/stgcn_temporal/seed42/stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "validation-check.stdout.log": {
+          "path": "runs/stgcn_temporal/seed42/validation-check.stdout.log",
+          "bytes": 404,
+          "sha256": "e188b26c3066510b2a3778330d8e340a5d73ee164ef175e607c66e75a48790ed"
+        },
+        "validation-check.stderr.log": {
+          "path": "runs/stgcn_temporal/seed42/validation-check.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "prediction_check": {
+        "data_id": "sha256:61a74eeffbe6f6c22d44ed1dbf02f3032ccd14ea88c09c61aa753f427e494219",
+        "model": "stgcn_temporal",
+        "split": "val",
+        "shape": [
+          3416,
+          12,
+          207
+        ],
+        "units": "mph",
+        "finite": true,
+        "origin_order_verified": true,
+        "sensor_order_verified": true,
+        "first_origin": 23989,
+        "last_origin": 27404,
+        "checkpoint_sha256": "cf08ddd141de6954567f9d30b7198454a47ce2a1e316b614282fac03fd456523",
+        "exported": false
+      },
+      "independent_reloaded_val_all12_mae_mph": 3.2402696340359514
+    }
+  ],
+  "comparison": {
+    "seed": 42,
+    "metric": "local val all12 MAE mph; B cross-check pending",
+    "temporal_minus_full_mae_mph": 0.22815568674596554,
+    "full_reduction_relative_to_temporal_percent": 7.041256207489865,
+    "full_parameter_count": 27276,
+    "temporal_parameter_count": 23180,
+    "parameter_counts_equal": false,
+    "multiple_seed_conclusion": false
+  },
+  "independent_verification": {
+    "verification_version": 1,
+    "models": {
+      "stgcn": {
+        "model": "stgcn",
+        "run_dir": "runs\\stgcn\\seed42",
+        "seed": 42,
+        "data_id": "sha256:61a74eeffbe6f6c22d44ed1dbf02f3032ccd14ea88c09c61aa753f427e494219",
+        "units": "mph",
+        "status": "verified_complete",
+        "effective_config": {
+          "model": "stgcn",
+          "hidden_channels": 32,
+          "blocks": 2,
+          "temporal_kernel": 3,
+          "cheb_order": 3,
+          "dropout": 0.1,
+          "learning_rate": 0.001,
+          "weight_decay": 0.0,
+          "batch_size": 32,
+          "max_epochs": 60,
+          "patience": 10,
+          "num_workers": 0,
+          "num_threads": 2,
+          "max_train_batches": null,
+          "max_val_batches": null,
+          "seed": 42,
+          "device": "cuda"
+        },
+        "code_commit": "9fae1063de461298e9ff8e78409fe4d9780d78c8",
+        "code_dirty": false,
+        "source_sha256": {
+          "__init__.py": "d9d704cde2b824eefa04cfbd1a2709e90be2523ef5cda3eb221708fb4d0612e5",
+          "model.py": "247e92cd9c0e986c9b35e9e9eb89747ddf040355d89871219316a9c29907136b",
+          "predict.py": "79568dc05c077bce1d61e01ed958c6152b13aee469e1814154b46ddb3fc9072f",
+          "train.py": "948d5425ea24f1e78106e89073aeacbbb3567b854eab06a6f5fa0ee91d21b5a0"
+        },
+        "all_epoch_full_coverage_verified": true,
+        "train_windows_each_epoch": 23967,
+        "train_batches_each_epoch": 749,
+        "train_valid_target_scalars_each_epoch": 55289280,
+        "val_windows_each_epoch": 3416,
+        "val_batches_each_epoch": 107,
+        "val_valid_target_scalars_each_epoch": 7892981,
+        "epochs_completed": 60,
+        "stopping_reason": "max_epochs",
+        "patience": 10,
+        "best_epoch": 58,
+        "best_val_all12_mae_mph": 3.012113947289986,
+        "independent_reloaded_val_all12_mae_mph": 3.012113947289986,
+        "independent_validation_seconds": 0.733081299928017,
+        "history_minimum_matches_checkpoint": true,
+        "parameter_count": 27276,
+        "training_seconds_including_checkpoint_restore_validation": 591.5306248000124,
+        "last_epoch_end_cumulative_seconds": 590.9899724000134,
+        "checkpoint_sha256": "a606ce7a1e85fecbe6660559e1073fa50ddf2a7ee4ab6e67ec56f46dbad009b9",
+        "history_sha256": "98693e1e61254cde50ca4207e6c4ad419044b309da36db5dfe749c31f5cdad9b",
+        "skipped_all_missing_batches": 0,
+        "validation_prediction_check": {
+          "data_id": "sha256:61a74eeffbe6f6c22d44ed1dbf02f3032ccd14ea88c09c61aa753f427e494219",
+          "model": "stgcn",
+          "split": "val",
+          "shape": [
+            3416,
+            12,
+            207
+          ],
+          "units": "mph",
+          "finite": true,
+          "origin_order_verified": true,
+          "sensor_order_verified": true,
+          "first_origin": 23989,
+          "last_origin": 27404,
+          "checkpoint_sha256": "a606ce7a1e85fecbe6660559e1073fa50ddf2a7ee4ab6e67ec56f46dbad009b9",
+          "exported": false
+        },
+        "validation_prediction_check_command": [
+          "C:\\Users\\Martin\\Desktop\\SpeedCast LA\\.venv-gpu\\Scripts\\python.exe",
+          "-m",
+          "traffic.models.stgcn.predict",
+          "--data",
+          "data\\metr-la-v1",
+          "--run-dir",
+          "C:\\Users\\Martin\\Desktop\\SpeedCast LA\\runs\\stgcn\\seed42",
+          "--split",
+          "val",
+          "--device",
+          "cuda",
+          "--check-only"
+        ],
+        "metric_backend": "local protocol-equivalent MAE; B cross-check pending",
+        "test_evaluated": false,
+        "environment": {
+          "python": "3.13.7",
+          "numpy": "2.5.3",
+          "torch": "2.11.0+cu128",
+          "torch_cuda": "12.8",
+          "cuda_available": true,
+          "device": "cuda",
+          "platform": "Windows-11-10.0.22631-SP0",
+          "cublas_workspace_config": ":4096:8"
+        }
+      },
+      "stgcn_temporal": {
+        "model": "stgcn_temporal",
+        "run_dir": "runs\\stgcn_temporal\\seed42",
+        "seed": 42,
+        "data_id": "sha256:61a74eeffbe6f6c22d44ed1dbf02f3032ccd14ea88c09c61aa753f427e494219",
+        "units": "mph",
+        "status": "verified_complete",
+        "effective_config": {
+          "model": "stgcn_temporal",
+          "hidden_channels": 32,
+          "blocks": 2,
+          "temporal_kernel": 3,
+          "cheb_order": 3,
+          "dropout": 0.1,
+          "learning_rate": 0.001,
+          "weight_decay": 0.0,
+          "batch_size": 32,
+          "max_epochs": 60,
+          "patience": 10,
+          "num_workers": 0,
+          "num_threads": 2,
+          "max_train_batches": null,
+          "max_val_batches": null,
+          "seed": 42,
+          "device": "cuda"
+        },
+        "code_commit": "9fae1063de461298e9ff8e78409fe4d9780d78c8",
+        "code_dirty": false,
+        "source_sha256": {
+          "__init__.py": "d9d704cde2b824eefa04cfbd1a2709e90be2523ef5cda3eb221708fb4d0612e5",
+          "model.py": "247e92cd9c0e986c9b35e9e9eb89747ddf040355d89871219316a9c29907136b",
+          "predict.py": "79568dc05c077bce1d61e01ed958c6152b13aee469e1814154b46ddb3fc9072f",
+          "train.py": "948d5425ea24f1e78106e89073aeacbbb3567b854eab06a6f5fa0ee91d21b5a0"
+        },
+        "all_epoch_full_coverage_verified": true,
+        "train_windows_each_epoch": 23967,
+        "train_batches_each_epoch": 749,
+        "train_valid_target_scalars_each_epoch": 55289280,
+        "val_windows_each_epoch": 3416,
+        "val_batches_each_epoch": 107,
+        "val_valid_target_scalars_each_epoch": 7892981,
+        "epochs_completed": 46,
+        "stopping_reason": "validation_early_stopping",
+        "patience": 10,
+        "best_epoch": 36,
+        "best_val_all12_mae_mph": 3.2402696340359514,
+        "independent_reloaded_val_all12_mae_mph": 3.2402696340359514,
+        "independent_validation_seconds": 0.5942333999555558,
+        "history_minimum_matches_checkpoint": true,
+        "parameter_count": 23180,
+        "training_seconds_including_checkpoint_restore_validation": 333.08145290007815,
+        "last_epoch_end_cumulative_seconds": 332.67085260001477,
+        "checkpoint_sha256": "cf08ddd141de6954567f9d30b7198454a47ce2a1e316b614282fac03fd456523",
+        "history_sha256": "c812486d22d002cd2a0888e9f6146057437ea295f559d872446bafb4e593e1c9",
+        "skipped_all_missing_batches": 0,
+        "validation_prediction_check": {
+          "data_id": "sha256:61a74eeffbe6f6c22d44ed1dbf02f3032ccd14ea88c09c61aa753f427e494219",
+          "model": "stgcn_temporal",
+          "split": "val",
+          "shape": [
+            3416,
+            12,
+            207
+          ],
+          "units": "mph",
+          "finite": true,
+          "origin_order_verified": true,
+          "sensor_order_verified": true,
+          "first_origin": 23989,
+          "last_origin": 27404,
+          "checkpoint_sha256": "cf08ddd141de6954567f9d30b7198454a47ce2a1e316b614282fac03fd456523",
+          "exported": false
+        },
+        "validation_prediction_check_command": [
+          "C:\\Users\\Martin\\Desktop\\SpeedCast LA\\.venv-gpu\\Scripts\\python.exe",
+          "-m",
+          "traffic.models.stgcn.predict",
+          "--data",
+          "data\\metr-la-v1",
+          "--run-dir",
+          "C:\\Users\\Martin\\Desktop\\SpeedCast LA\\runs\\stgcn_temporal\\seed42",
+          "--split",
+          "val",
+          "--device",
+          "cuda",
+          "--check-only"
+        ],
+        "metric_backend": "local protocol-equivalent MAE; B cross-check pending",
+        "test_evaluated": false,
+        "environment": {
+          "python": "3.13.7",
+          "numpy": "2.5.3",
+          "torch": "2.11.0+cu128",
+          "torch_cuda": "12.8",
+          "cuda_available": true,
+          "device": "cuda",
+          "platform": "Windows-11-10.0.22631-SP0",
+          "cublas_workspace_config": ":4096:8"
+        }
+      }
+    },
+    "test_evaluated": false,
+    "notes": [
+      "Each run is a single seed42 observation",
+      "B's common evaluator remains pending if absent from metric_backend",
+      "Training time includes selected-weight restoration and a repeated validation pass; history elapsed is cumulative to final epoch end"
+    ],
+    "verified_utc": "2026-11-22T05:08:08.812915+00:00",
+    "verification_environment": {
+      "python": "3.13.7",
+      "torch": "2.11.0+cu128",
+      "torch_cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU"
+    },
+    "comparison": {
+      "same_seed_and_training_budget_verified": true,
+      "temporal_minus_full_val_mae_mph": 0.22815568674596554,
+      "interpretation": "Single-seed validation observation; no test results or multi-seed uncertainty claim"
+    }
+  }
+}

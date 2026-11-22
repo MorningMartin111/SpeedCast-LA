@@ -63,6 +63,6 @@ python -m traffic.models.stgcn.train --data data/metr-la-v1 --config configs/stg
 python -m traffic.models.stgcn.predict --data data/metr-la-v1 --run-dir runs/smoke/stgcn/seed42 --split val --check-only
 ```
 
-正式训练去掉 `--max-epochs` 和 `--max-train-batches`，使用新目录 `runs/stgcn/seed42`；默认最多 60 epochs、早停耐心 10 次。消融同时替换配置为 `configs/stgcn_temporal.json`、目录为 `runs/stgcn_temporal/seed42`，保持相同种子与预算。结构、引用、验收、完整命令和待完成的正式实验见 [reports/models/stgcn.md](reports/models/stgcn.md)。
+正式训练去掉 `--max-epochs` 和 `--max-train-batches`，使用新目录 `runs/stgcn/seed42`；默认最多 60 epochs、早停耐心 10 次。消融同时替换配置为 `configs/stgcn_temporal.json`、目录为 `runs/stgcn_temporal/seed42`，保持相同种子与预算。结构、引用、验收、完整命令和正式训练结果与待接入的统一评测见 [reports/models/stgcn.md](reports/models/stgcn.md)。
 
 A 的 PR 顺序、可直接发给 B/C 的消息和下一步依赖见 [docs/handoff-a.md](docs/handoff-a.md)。
