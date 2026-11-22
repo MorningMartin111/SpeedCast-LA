@@ -43,3 +43,24 @@ python -m traffic.data.check --data data/metr-la-v1
 ```
 
 实测 `T=34272,N=207`，train/val/test 为 `23967/3416/6844` 个起点。正式 `data_id` 为 `sha256:61a74eeffbe6f6c22d44ed1dbf02f3032ccd14ea88c09c61aa753f427e494219`。来源、原文件 SHA-256、数据质量和时间摘要见 [docs/data.md](docs/data.md)。
+
+STGCN 和纯时间消融已实现，先在 CPU 上运行小样本：
+
+```powershell
+python -m traffic.models.stgcn.train --data data/fixture-v1 --config configs/stgcn.json --seed 42 --run-dir runs/fixture/stgcn/seed42 --device cpu --max-epochs 1
+python -m traffic.models.stgcn.predict --data data/fixture-v1 --run-dir runs/fixture/stgcn/seed42 --split val --check-only
+python -m traffic.models.stgcn.train --data data/fixture-v1 --config configs/stgcn_temporal.json --seed 42 --run-dir runs/fixture/stgcn_temporal/seed42 --device cpu --max-epochs 1
+python -m traffic.models.stgcn.predict --data data/fixture-v1 --run-dir runs/fixture/stgcn_temporal/seed42 --split val --check-only
+python -m unittest discover -s tests -v
+```
+
+运行目录必须为空。`--check-only` 在内存中验证完整 split 的形状、mph 单位、有限性及起点/节点顺序。正式导出调用 B 的 `traffic.eval.io.write_predictions`；B 的模块合并后去掉此标志，再运行 `python -m traffic.eval.run`。目前 B 的评测代码尚未加入仓库。
+
+正式数据单批训练检查（用于验证接口，运行记录标记 `smoke_only`）：
+
+```powershell
+python -m traffic.models.stgcn.train --data data/metr-la-v1 --config configs/stgcn.json --seed 42 --run-dir runs/smoke/stgcn/seed42 --device cpu --max-epochs 1 --max-train-batches 1
+python -m traffic.models.stgcn.predict --data data/metr-la-v1 --run-dir runs/smoke/stgcn/seed42 --split val --check-only
+```
+
+正式训练去掉 `--max-epochs` 和 `--max-train-batches`，使用新目录 `runs/stgcn/seed42`；默认最多 60 epochs、早停耐心 10 次。消融同时替换配置为 `configs/stgcn_temporal.json`、目录为 `runs/stgcn_temporal/seed42`，保持相同种子与预算。结构、引用、验收、完整命令和待完成的正式实验见 [reports/models/stgcn.md](reports/models/stgcn.md)。
