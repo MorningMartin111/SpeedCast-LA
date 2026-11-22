@@ -12,7 +12,7 @@ jobs:
           python-version: '3.13'
           cache: pip
       - run: python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
-      - run: python -m pip install -r requirements.txt
+      - run: python -m pip install -r requirements-data.txt
       - run: python -m traffic.data.fixture --out data/fixture-v1
       - run: python -m traffic.data.check --data data/fixture-v1 --fixture
-      - run: python -m unittest discover -s tests -p 'test_data.py' -v
+      - run: python -m unittest discover -s tests -v
