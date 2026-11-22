@@ -12,3 +12,5 @@ Python 3.11 是任务书的建议起点，本次实际验证使用 Python 3.13�
 另从 GitHub 克隆 `feat/a-data-contract`，创建未继承系统包的独立环境并按 `requirements.txt` 安装，实际得到 Python 3.13.7 / NumPy 2.5.5 / PyTorch 2.15.0+cpu。fixture 生成、手算检查和全部 9 项数据测试再次通过，逻辑指纹与上面的 NumPy 2.5.3 环境完全一致。
 
 正式数据准备另安装 `requirements-data.txt`；本机实际为 pandas 3.1.1 / PyTables 3.11.1。作者 2017 年 HDF5 的字节元数据触发 pandas 3 兼容性问题，准备脚本使用只读数值数组读取路径，保留原始文件校验值。
+
+独立环境进一步安装正式数据依赖后通过全部 22 项测试；从原始数据完整重建 METR-LA 得到相同正式指纹 `sha256:61a74eeffbe6f6c22d44ed1dbf02f3032ccd14ea88c09c61aa753f427e494219`。发布模型分支的全新克隆也通过 22 项测试。
