@@ -1,0 +1,5 @@
+purpose,model,seed,run_dir,epoch,train_n,train_mae_mph,val_n,val_mae_mph,skipped_all_missing_batches,elapsed_seconds
+fixture,stgcn,42,runs/fixture/stgcn/seed42,1,2196,4.785608571300958,36,8.320109685262045,0,0.026359600014984608
+fixture,stgcn_temporal,42,runs/fixture/stgcn_temporal/seed42,1,2196,5.0360880019669105,36,8.458591991000706,0,0.027643400011584163
+smoke,stgcn,42,runs/smoke/stgcn/seed42,1,78178,11.660569731432673,7892981,10.145620112642698,0,9.871008699992672
+smoke,stgcn_temporal,42,runs/smoke/stgcn_temporal/seed42,1,78178,11.475202144471636,7892981,9.295529931281227,0,3.981393299996853
