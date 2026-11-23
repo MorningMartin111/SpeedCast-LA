@@ -33,6 +33,20 @@ fixture 固定 120 行、3 个站点，节点轴 `S02,S01,S03`，训练/验证/�
 
 原始数据、生成的数据包、完整预测与模型权重通过复现命令生成，默认不提交 Git。B、C 可先接入 fixture，随后同步正式数据包的 `data_id`。
 
+### Persistence 与统一评分
+
+在项目根目录执行以下命令，生成 fixture 的预测文件和指标表：
+
+```powershell
+python -m traffic.models.persistence --data data/fixture-v1 --run-dir runs/fixture/persistence/fixed --split test
+python -m traffic.eval.run --data data/fixture-v1 --run-dir runs/fixture/persistence/fixed --split test
+python -m unittest discover -s tests -p "test_eval*.py" -v
+```
+
+第一条命令把每站点起点时的 `last_mph` 重复到 12 步，生成 `run.json` 和 `test.npz`。第二条命令从数据包读取原始标签和掩码，校验预测的单位、数据指纹及起点和站点顺序，然后生成 `metrics_test.csv`。表中的 `3`、`6`、`12` 各自只统计该步，`all12` 汇总全部有效元素。起点 `96` 的手算结果由测试单独验证，CSV 汇总完整 split。
+
+正式 Persistence 使用 `--data data/metr-la-v1 --run-dir runs/persistence/fixed`。先生成并评分 `--split val`，配置锁定后再处理 `--split test`。
+
 正式 METR-LA 数据已验证，可从 DCRNN 作者来源重建：
 
 ```powershell
@@ -54,7 +68,14 @@ python -m traffic.models.stgcn.predict --data data/fixture-v1 --run-dir runs/fix
 python -m unittest discover -s tests -v
 ```
 
-运行目录必须为空。`--check-only` 在内存中验证完整 split 的形状、mph 单位、有限性及起点/节点顺序。正式导出调用 B 的 `traffic.eval.io.write_predictions`；B 的模块合并后去掉此标志，再运行 `python -m traffic.eval.run`。目前 B 的评测代码尚未加入仓库。
+训练的运行目录必须为空。`--check-only` 在内存中验证完整 split 的形状、mph 单位、有限性及起点/节点顺序。去掉此标志时，`predict` 调用 `traffic.eval.io.write_predictions` 把预测导出到对应的 `val.npz` 或 `test.npz`。已有正式 checkpoint 时，可从项目根目录导出并评分验证集：
+
+```powershell
+python -m traffic.models.stgcn.predict --data data/metr-la-v1 --run-dir runs/stgcn/seed42 --split val
+python -m traffic.eval.run --data data/metr-la-v1 --run-dir runs/stgcn/seed42 --split val
+```
+
+纯时间模型使用 `runs/stgcn_temporal/seed42` 作为运行目录，这两条命令的其他参数相同。
 
 正式数据单批训练检查（用于验证接口，运行记录标记 `smoke_only`）：
 
